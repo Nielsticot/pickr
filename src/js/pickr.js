@@ -28,6 +28,7 @@ class Pickr {
             default: 'fff',
             defaultRepresentation: 'HEX',
             position: 'middle',
+            verticalPosition: 'bottom',
             adjustableNumbers: true,
             showAlways: false,
             parent: undefined,
@@ -353,11 +354,20 @@ class Pickr {
         const ab = app.getBoundingClientRect();
         const as = app.style;
 
+        // Check in different order depending of 'verticalPosition' option
         // Check if picker is cuttet of from the top & bottom
-        if (ab.bottom > window.innerHeight) {
-            as.top = `${-(ab.height) - 5}px`;
-        } else if (bb.bottom + ab.height < window.innerHeight) {
-            as.top = `${bb.height + 5}px`;
+        if (this.options.verticalPosition == 'top') {
+            if (bb.bottom + ab.height < window.innerHeight) {
+                as.top = `${bb.height + 5}px`;
+            } else if (ab.bottom > window.innerHeight) {
+                as.top = `${-(ab.height) - 5}px`;
+            }
+        } else {
+            if (ab.bottom > window.innerHeight) {
+                as.top = `${-(ab.height) - 5}px`;
+            } else if (bb.bottom + ab.height < window.innerHeight) {
+                as.top = `${bb.height + 5}px`;
+            }
         }
 
         // Positioning picker on the x-axis
